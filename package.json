@@ -1,0 +1,20 @@
+{
+  "name": "dead_simple",
+  "version": "1.0.0",
+  "description": "Dead simple anonymous chat server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "socket",
+    "anonymous"
+  ],
+  "author": "David Brownman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  }
+}
