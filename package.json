@@ -4,8 +4,11 @@
   "description": "Dead simple anonymous chat server",
   "main": "index.js",
   "scripts": {
+    "serve": "parallelshell \"watchify app/client.js -o app/_bundle.js -v\" \"nodemon\"",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/Xavdidtheshadow/dead_simple.git",
   "keywords": [
     "chat",
     "socket",
@@ -14,7 +17,13 @@
   "author": "David Brownman",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.5.0",
+    "browserify": "^13.0.0",
     "express": "^4.13.4",
+    "jade": "^1.11.0",
     "socket.io": "^1.4.5"
+  },
+  "devDependencies": {
+    "watchify": "^3.7.0"
   }
 }
