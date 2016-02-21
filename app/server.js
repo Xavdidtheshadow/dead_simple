@@ -20,7 +20,10 @@ module.exports = function(){
   io.on('connection', (socket) => {
     socket.on('message', msg => {
       console.log('got message from', msg.room);
-      io.emit(`message:${msg.room}`, {message: `yeah ${msg.message}`});
+      io.emit(`message:${msg.room}`, {
+        message: `yeah ${msg.message}`,
+        user: msg.user
+      });
     });
 
     socket.on('disconnect', () => {

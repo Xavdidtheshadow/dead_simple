@@ -1,0 +1,3 @@
+
+web: nodemon --ignore app/_bundle.js --ignore app/client.js
+bundle: npm run bundle

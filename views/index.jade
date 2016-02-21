@@ -8,7 +8,7 @@ html
       h1
         | dead simple
       h3
-        | welcome to {{room}}, {{color}} | {{1+1}}
+        | welcome to {{room}} 
       //- pre {{messages | json}}
 
       form(ng-submit='submit()')
@@ -17,9 +17,9 @@ html
         button.btn.btn-default 
           | Send
 
-      ul.messages('ng-repeat'='message in messages')
-        li
-          | {{ message }}
+      ul.messages(ng-repeat='message in messages')
+        li(ng-style='message.style')
+          | {{message.user.id}}: {{ message.message }}
 
       script(src='/client.js')
         
