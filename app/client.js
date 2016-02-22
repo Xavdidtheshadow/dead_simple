@@ -18,16 +18,31 @@ var angular = require('angular');
 var socket = require('socket.io-client')();
 // var colors = require('./colors');
 var utils = require('./utils');
+var glue = require('angularjs-scroll-glue');
 
-var app = angular.module('simpleApp', [])
+var app = angular.module('simpleApp', ['luegg.directives'])
   .controller('RoomController', ['$scope', '$timeout', function($scope, $timeout) {
+
     $scope.init = function(room) {
       $scope.room = room;
       $scope.messages = [];
       // $scope.user = colors.color_pair();
       $scope.user = {id: utils.randomId()};
+      // we always start with just us? 
+      $scope.user_count = 1;
       // console.log($scope.user);
       // console.log(utils.randomId());
+
+      // socket.on('connect', function() {
+      //   console.log('connected');
+      //   socket.emit('enter', {
+      //     room: $scope.room
+      //   });
+
+      //   socket.on('disconnect', function() {
+      //     console.log('server problems...');
+      //   });
+      // });
 
       socket.on('message:' + $scope.room, function(msg){
         // timeout cause https://stackoverflow.com/questions/30976934/socket-io-message-doesnt-update-angular-variable
@@ -43,6 +58,14 @@ var app = angular.module('simpleApp', [])
           $scope.messages.push(msg);
         });
       });
+
+      socket.on('users:' + $scope.room, function(data){
+        console.log(data);
+        $timeout(function() {
+          $scope.user_count = data.count;
+        });
+      });
+
     };
 
     $scope.submit = function() {

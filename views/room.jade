@@ -1,0 +1,21 @@
+extends ./layout.jade
+
+block content
+  .main(ng-controller='RoomController' ng-init='init("#{room}")')
+    h1
+      | dead simple
+    h3
+      | welcome to {{room}} ({{ user_count }} users present)
+    //- pre {{messages | json}}
+
+    form(ng-submit='submit()')
+      .form-group
+        input.form-control(autocomplete='off' ng-model='model.text' type='text')
+      button.btn.btn-default 
+        | Send
+
+    .chat(scroll-glue)
+      ul.messages
+        li(ng-repeat='message in messages' ng-style='message.style')
+          | {{message.user.id}}: {{ message.message }}
+        

@@ -38,3 +38,6 @@ node_modules
 
 # bundle
 app/_bundle.js
+app/_the.css
+.sass-cache
+
