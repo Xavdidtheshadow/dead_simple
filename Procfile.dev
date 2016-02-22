@@ -1,4 +1,4 @@
 
 web: nodemon --ignore app/_bundle.js --ignore app/client.js
-bundle: npm run bundle
+bundle: npm run devbundle
 sass: sass --sourcemap=none -w views/the.scss:app/_the.css

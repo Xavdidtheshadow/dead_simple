@@ -1,0 +1,25 @@
+h1 {
+  font-weight: lighter; }
+
+h3 {
+  font-weight: normal; }
+
+.notif {
+  padding-left: 10px; }
+
+.placeholder {
+  height: 30px; }
+
+.chat {
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid lightgrey;
+  margin-top: 20px; }
+  .chat ul {
+    margin-left: -40px;
+    margin-top: 0;
+    margin-bottom: 0; }
+  .chat li {
+    list-style-type: none;
+    padding: 5px; }

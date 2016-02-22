@@ -5,17 +5,27 @@ block content
     h1
       | dead simple
     h3
-      | welcome to {{room}} ({{ user_count }} users present)
-    //- pre {{messages | json}}
+      span.small
+        | room 
+      | {{ room }} 
+      span.small
+        | user 
+      | {{ user.id }}
+      //-({{ user_count }} users present)
 
     form(ng-submit='submit()')
       .form-group
-        input.form-control(autocomplete='off' ng-model='model.text' type='text')
+        input.form-control(autocomplete='off' ng-model='model.text' type='text' autofocus)
       button.btn.btn-default 
         | Send
+      span.notif(ng-show='!glued && glued_to !== message_count')
+        | New messages below! 
+        a(ng-click='scroll_to_bottom()')
+          | Scroll to bottom
 
-    .chat(scroll-glue)
+    .chat(scroll-glue='glued')
       ul.messages
         li(ng-repeat='message in messages' ng-style='message.style')
           | {{message.user.id}}: {{ message.message }}
-        
+
+      a#bottom
