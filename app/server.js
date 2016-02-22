@@ -6,7 +6,7 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 // var counter = require('./counter');
 
-var port = process.env.port || 1337;
+var port = process.env.PORT || 1337;
 
 module.exports = function() {
   var room_counts = {};
