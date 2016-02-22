@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devbundle": "watchify app/client.js -o app/_bundle.js",
-    "postinstall": "browserify app/client.js -o app/_bundle.js"
+    "postinstall": "browserify app/client.js -o app/_bundle.js",
     "start": "node index.js"
   },
   "repository": "https://github.com/Xavdidtheshadow/dead_simple.git",
