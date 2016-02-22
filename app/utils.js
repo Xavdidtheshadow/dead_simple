@@ -27,7 +27,7 @@ function randomString(size) {
 
 // Returns a new random alphanumeric string suitable for object ID.
 module.exports = {
-  randomId: () => {
+  randomId: function() {
     //TODO: increase length to better protect against collisions.
     return randomString(8);
   }
