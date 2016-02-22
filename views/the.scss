@@ -6,6 +6,10 @@ h3 {
   font-weight: normal;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 .notif {
   padding-left: 10px;
 }

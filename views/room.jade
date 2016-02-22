@@ -1,9 +1,7 @@
 extends ./layout.jade
 
 block content
-  .main(ng-controller='RoomController' ng-init='init("#{room}")')
-    h1
-      | dead simple
+  .main(ng-controller='RoomController' ng-init='init("#{room}")' ng-cloak)
     h3
       span.small
         | room 

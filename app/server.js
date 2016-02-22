@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-var counter = require('./counter');
+// var counter = require('./counter');
 
 var port = process.env.port || 1337;
 
@@ -20,6 +20,10 @@ module.exports = function() {
   app.get('/style.css', (req, res) => {
     res.sendFile(__dirname + '/_the.css');
   });
+
+  app.get('/', (req, res) => {
+    res.render('index');
+  });  
 
   app.get('/room/:id', (req, res) => {
     res.render('room', {room: req.params.id});
@@ -43,7 +47,7 @@ module.exports = function() {
     socket.on('message', msg => {
       console.log('got message from', msg.room);
       io.emit(`message:${msg.room}`, {
-        message: `yeah ${msg.message}`,
+        message: msg.message,
         user: msg.user
       });
     });
