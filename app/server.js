@@ -30,6 +30,8 @@ module.exports = function() {
   });
 
   io.on('connection', (socket) => {
+    // console.log('user connected', socket);
+    
     // socket.on('enter', data => {
     //   console.log('user connected to', data.room);
     //   var c = counter.incr(data.room);

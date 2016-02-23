@@ -6,7 +6,7 @@ var utils = require('./utils');
 var glue = require('angularjs-scroll-glue');
 
 var app = angular.module('simpleApp', ['luegg.directives'])
-  .controller('RoomController', ['$scope', '$timeout', '$anchorScroll', function($scope, $timeout, $anchorScroll) {
+  .controller('RoomController', ['$scope', '$timeout', function($scope, $timeout) {
 
     $scope.init = function(room) {
       $scope.room = room; // passed in from controller
@@ -69,15 +69,18 @@ var app = angular.module('simpleApp', ['luegg.directives'])
     };
 
     $scope.scroll_to_bottom = function() {
-      $anchorScroll('bottom');
+      $scope.glued = true;
     };
 
     $scope.submit = function() {
-      socket.emit('message', {
-        message: $scope.model.text, 
-        room: $scope.room,
-        user: $scope.user
-      });
-      $scope.model.text = '';
+      if ($scope.model.text !== '') {
+        socket.emit('message', {
+          message: $scope.model.text, 
+          room: $scope.room,
+          user: $scope.user
+        });
+        $scope.model.text = '';
+      }
+
     };
   }]);
