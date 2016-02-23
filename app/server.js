@@ -47,10 +47,13 @@ module.exports = function() {
     });
 
     socket.on('disconnect', () => {
-      console.log('user', socket.info.user.id,'disconnected from', socket.info.room);
-      var c = counter.decr(socket.info.room);
-      // console.log(c);
-      io.emit(`users:${socket.info.room}`, {count: c});
+      if (socket.info) {
+        // sometimes this info isn't here? 
+        console.log('user', socket.info.user.id,'disconnected from', socket.info.room);
+        var c = counter.decr(socket.info.room);
+        // console.log(c);
+        io.emit(`users:${socket.info.room}`, {count: c});
+      }
     });
   });
 
