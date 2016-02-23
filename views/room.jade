@@ -8,15 +8,17 @@ block content
       | {{ room }} 
       span.small
         | user 
-      | {{ user.id }}
-      //-({{ user_count }} users present)
+      | {{ user.id }} 
+      span.small
+        | users present 
+      | {{ user_count }}
 
     form(ng-submit='submit()')
       .form-group
         input.form-control(autocomplete='off' ng-model='model.text' type='text' autofocus)
       button.btn.btn-default 
         | Send
-      span.notif(ng-show='!glued && glued_to !== message_count')
+      span.notif(ng-show='!glued && updates')
         | New messages below! 
         a(ng-click='scroll_to_bottom()')
           | Scroll to bottom

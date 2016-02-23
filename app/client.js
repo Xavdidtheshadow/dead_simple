@@ -12,37 +12,23 @@ var app = angular.module('simpleApp', ['luegg.directives'])
       $scope.room = room; // passed in from controller
       $scope.messages = [];
       $scope.model = {
-        text: '' // init to string so we can submit empty box
+        text: ''
       };
       
       $scope.user = {id: utils.randomId()};
       
-      // $scope.user_count = 1;
+      $scope.user_count = '...';
       $scope.glued = true;
-      $scope.glued_to = 0;
-
-      $scope.message_count = 0;
       
       $scope.$watch('glued', function(newVal, oldVal) {
         if (newVal === oldVal) { return; }
 
-        if (newVal === false) {
+        if (newVal === true) {
           // store the number for the last message they saw
-          $scope.glued_to = $scope.message_count;
+          $scope.updates = false;
         }
         // console.log(oldVal,'is now',newVal);
       });
-
-      // socket.on('connect', function() {
-      //   console.log('connected');
-      //   socket.emit('enter', {
-      //     room: $scope.room
-      //   });
-
-      //   socket.on('disconnect', function() {
-      //     console.log('server problems...');
-      //   });
-      // });
 
       socket.on('message:' + $scope.room, function(msg){
         // timeout cause https://stackoverflow.com/questions/30976934/socket-io-message-doesnt-update-angular-variable
@@ -55,17 +41,31 @@ var app = angular.module('simpleApp', ['luegg.directives'])
 
         msg.style = {'background-color': color};
         $timeout(function() {
-          $scope.message_count += 1;
+          if (!$scope.glued) {
+            $scope.updates = true;
+          }
           $scope.messages.push(msg);
         });
       });
 
-      // socket.on('users:' + $scope.room, function(data){
-      //   console.log(data);
-      //   $timeout(function() {
-      //     $scope.user_count = data.count;
-      //   });
-      // });
+      socket.on('users:' + $scope.room, function(data){
+        console.log(data);
+        $timeout(function() {
+          $scope.user_count = data.count;
+        });
+      });
+      
+      socket.on('connect', function() {
+        console.log('connected');
+        socket.emit('enter', {
+          room: $scope.room,
+          user: $scope.user
+        });
+
+        //   socket.on('disconnect', function() {
+        //     console.log('server problems...');
+        //   });
+      });
     };
 
     $scope.scroll_to_bottom = function() {
@@ -81,6 +81,5 @@ var app = angular.module('simpleApp', ['luegg.directives'])
         });
         $scope.model.text = '';
       }
-
     };
   }]);

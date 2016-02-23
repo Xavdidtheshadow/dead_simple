@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-// var counter = require('./counter');
+var counter = require('./counter');
 
 var port = process.env.PORT || 1337;
 
@@ -29,33 +29,28 @@ module.exports = function() {
     res.render('room', {room: req.params.id});
   });
 
-  io.on('connection', (socket) => {
-    // console.log('user connected', socket);
-    
-    // socket.on('enter', data => {
-    //   console.log('user connected to', data.room);
-    //   var c = counter.incr(data.room);
-    //   console.log(c, counter.count(data.room));
-    //   socket.emit(`users:${data.room}`, {count: c});
-    // });
-
-    // socket.on('exit', data => {
-    //   console.log('user disconnected from', data.room);
-    //   var c = counter.decr(data.room);
-    //   console.log(c, counter.count(data.room));
-    //   socket.emit(`users:${data.room}`, {count: c});
-    // });
+  io.on('connection', (socket) => {    
+    socket.on('enter', data => {
+      console.log('user', data.user.id,'connected to', data.room);
+      socket.info = data;
+      var c = counter.incr(socket.info.room);
+      // console.log(c);
+      io.emit(`users:${socket.info.room}`, {count: c});
+    });
 
     socket.on('message', msg => {
-      console.log('got message from', msg.room);
       io.emit(`message:${msg.room}`, {
         message: msg.message,
         user: msg.user
+        // room_count: counter.count(msg.room) // could resent for reconnects
       });
     });
 
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      console.log('user', socket.info.user.id,'disconnected from', socket.info.room);
+      var c = counter.decr(socket.info.room);
+      // console.log(c);
+      io.emit(`users:${socket.info.room}`, {count: c});
     });
   });
 
