@@ -1,3 +1,4 @@
+// light angular client
 
 var angular = require('angular');
 var socket = require('socket.io-client')();
@@ -16,18 +17,15 @@ var app = angular.module('simpleApp', ['luegg.directives'])
       };
       
       $scope.user = {id: utils.randomId()};
-      
-      $scope.user_count = '...';
+      $scope.user_count = '...'; // nice init value
       $scope.glued = true;
       
       $scope.$watch('glued', function(newVal, oldVal) {
         if (newVal === oldVal) { return; }
 
         if (newVal === true) {
-          // store the number for the last message they saw
           $scope.updates = false;
         }
-        // console.log(oldVal,'is now',newVal);
       });
 
       socket.on('message:' + $scope.room, function(msg){
@@ -62,9 +60,19 @@ var app = angular.module('simpleApp', ['luegg.directives'])
           user: $scope.user
         });
 
-        //   socket.on('disconnect', function() {
-        //     console.log('server problems...');
-        //   });
+        socket.on('disconnect', function() {
+          console.log('server errors');
+          $timeout(function() {
+            $scope.server_error = true;
+          });
+        });
+
+        socket.on('reconnect', function() {
+          console.log('reconnected');
+          $timeout(function() {
+            $scope.server_error = false;
+          });
+        });
       });
     };
 
@@ -73,7 +81,7 @@ var app = angular.module('simpleApp', ['luegg.directives'])
     };
 
     $scope.submit = function() {
-      if ($scope.model.text !== '') {
+      if ($scope.model.text !== '' && !$scope.server_error) {
         socket.emit('message', {
           message: $scope.model.text, 
           room: $scope.room,

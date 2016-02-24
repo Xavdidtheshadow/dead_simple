@@ -1,3 +1,9 @@
+// everything is top level
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 h1 {
   font-weight: lighter;
 }
@@ -6,16 +12,12 @@ h3 {
   font-weight: normal;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
 .notif {
   padding-left: 10px;
 }
 
-.placeholder {
-  height: 30px;
+.danger {
+  color: red;
 }
 
 .chat {
@@ -34,7 +36,6 @@ h3 {
   }
 
   li {
-    // width: 90%;
     list-style-type: none;
     padding: 5px;
   }
