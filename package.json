@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devbundle": "watchify app/client.js -o app/_bundle.js",
-    "postinstall": "browserify app/client.js -o app/_bundle.js",
+    "postinstall": "npm run dist:js && npm run dist:css",
+    "dist:js": "browserify app/client.js -o app/_bundle.js",
+    "dist:css": "./node_modules/node-sass/bin/node-sass views/the.scss app/_the.css",
+    "clean": "rm -f app/_the.css app/_bundle.js",
     "start": "node index.js"
   },
   "repository": "https://github.com/Xavdidtheshadow/dead_simple.git",
@@ -18,6 +21,7 @@
     "browserify": "^13.0.0",
     "express": "^4.13.4",
     "jade": "^1.11.0",
+    "node-sass": "^3.4.2",
     "socket.io": "^1.4.5"
   },
   "devDependencies": {
