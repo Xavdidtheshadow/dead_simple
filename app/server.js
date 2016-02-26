@@ -13,6 +13,14 @@ module.exports = function() {
 
   app.set('view engine', 'jade');
 
+  if (process.env.NODE_ENV === 'production') {
+    console.log('prod!');
+    var forceSSL = require('express-force-ssl');
+    app.use(forceSSL);
+  } else {
+    console.log('local');
+  }
+
   app.get('/client.js', (req, res) => {
     res.sendFile(__dirname + '/_bundle.js');
   });
